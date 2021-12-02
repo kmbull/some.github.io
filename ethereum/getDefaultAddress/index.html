@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="../web3/v1.0.0-beta.34/web3.min.js"></script>
+</head>
+<body>
+
+  <h1>Get Default Address</h1>
+  <div><button id="check" onclick="check()">Check</button></div>
+
+
+  <p>Result</p>
+  <span id="result"></span>
+
+  <script>
+    var web3js;
+
+    window.addEventListener('load', function() {
+
+      // Web3 が Ethereum 対応ブラウザ（Mist や MetaMask）によってインジェクトされているかどうかをチェックします。
+      if (typeof web3 !== 'undefined') {
+        // Mist または MetaMask のプロバイダを使用して Web3 を初期化します。
+        web3js = new Web3(web3.currentProvider);
+        console.log('isMetaMask', web3.currentProvider.isMetaMask);
+      } else {
+        // Mist や MetaMask 等の Ethereum 対応ブラウザを使用していない場合の初期化です。
+        // 必要に応じて、ローカルノードやホスティングしているノード等を使用します。
+        // 以下の例では infura.io をプロバイダとして使用し、Web3 を初期化しています。
+        web3js = new Web3('wss://mainnet.infura.io/ws');
+      }
+      console.log(web3js.version);
+      console.log(web3js.eth.defaultAccount);
+    });
+
+    function check() {
+      console.log(web3js.eth.defaultAccount);
+      document.getElementById('result').innerText = web3js.eth.defaultAccount;
+    }
+
+  </script>
+
+</body>
+</html>
